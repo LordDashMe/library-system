@@ -1,0 +1,39 @@
+{
+  "data": [
+    {
+      "id": "1",
+      "book_title": "Tiger Nixon",
+      "book_description": "System Architect",
+      "book_author": "$320,800",
+      "book_publish": "0"
+    },
+    {
+      "id": "2",
+      "book_title": "Garrett Winters",
+      "book_description": "Accountant",
+      "book_author": "$170,750",
+      "book_publish": "1"
+    },
+    {
+      "id": "3",
+      "book_title": "Ashton Cox",
+      "book_description": "Junior Technical Author",
+      "book_author": "$86,000",
+      "book_publish": "0"
+    },
+    {
+      "id": "4",
+      "book_title": "Cedric Kelly",
+      "book_description": "Senior Javascript Developer",
+      "book_author": "$433,060",
+      "book_publish": "1"
+    },
+    {
+      "id": "5",
+      "book_title": "Airi Satou",
+      "book_description": "Accountant",
+      "book_author": "$162,700",
+      "book_publish": "1"
+    }
+  ]
+}

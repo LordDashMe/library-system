@@ -1,0 +1,30 @@
+html,
+body {
+    width: 100%;
+    margin: 0px;
+    padding: 0px;
+    overflow-x: hidden;
+}
+body {
+    font-family: "Montserrat", sans-serif;
+}
+
+#wrapper {
+    padding: 20px;
+}
+
+.mfp-content {
+    width: auto;
+    max-width: 500px;
+}
+
+.required-field {
+    color: red;
+}
+
+.form-check-input {
+    display: block; 
+    float: left; 
+    padding-right: 10px; 
+    white-space: nowrap;
+}
