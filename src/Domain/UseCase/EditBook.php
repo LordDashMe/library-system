@@ -53,6 +53,7 @@ class EditBook
                 throw EditBookFailedException::requiredFieldIsEmpty($requiedFieldLabel);
             }
         }
+        
         return $this;
     }
 

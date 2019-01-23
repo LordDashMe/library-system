@@ -41,6 +41,7 @@ class AddBook
                 throw AddBookFailedException::requiredFieldIsEmpty($requiedFieldLabel);
             }
         }
+        
         return $this;
     }
 
