@@ -7,7 +7,9 @@ use JoshuaReyes\LibrarySystem\Domain\ValueObject\BookId;
 
 interface BookRepository
 {
-    public function getAllBooks();
+    public function getAllBooks($options);
+
+    public function find(BookId $bookId);
 
     public function add(Book $book);
 

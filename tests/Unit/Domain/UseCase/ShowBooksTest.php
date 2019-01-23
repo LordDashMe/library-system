@@ -18,7 +18,7 @@ class ShowBookTests extends TestCase
     {
         $bookRepository = Mockery::mock(BookRepository::class);
 
-        $this->assertInstanceOf(ShowBooks::class, new ShowBooks($bookRepository));
+        $this->assertInstanceOf(ShowBooks::class, new ShowBooks(array(), $bookRepository));
     }
 
     /**
@@ -27,10 +27,11 @@ class ShowBookTests extends TestCase
     public function it_should_get_all_books()
     {
         $bookRepository = Mockery::mock(BookRepository::class);
+        
         $bookRepository->shouldReceive('getAllBooks')
-                       ->andReturn(true);
+            ->andReturn(true);
 
-        $showBooks = new ShowBooks($bookRepository);
+        $showBooks = new ShowBooks(array(), $bookRepository);
 
         $this->assertEquals(true, $showBooks->execute()); 
     }

@@ -2,15 +2,19 @@
 
 require '../../vendor/autoload.php';
 require '../../doctrine_config.php';
+require 'json_formatter.php';
 
 use JoshuaReyes\LibrarySystem\Infrastructure\Repository\Doctrine\BookRepositoryImpl;
-use JoshuaReyes\LibrarySystem\Domain\UseCase\DeleteBooks;
+use JoshuaReyes\LibrarySystem\Domain\UseCase\DeleteBook;
 
-$bookId = $_POST['book_id'];
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    exit("You're not using POST request method.");
+}
 
-$deleteBooks = new DeleteBooks($bookId, new BookRepositoryImpl());
+$bookId = $_POST['id'];
 
-$records = $deleteBooks->execute();
+$deleteBook = new DeleteBook($bookId, new BookRepositoryImpl());
 
-echo '<pre>';
-var_dump($records);
+$records = $deleteBook->execute();
+
+APIJsonFormatter::format('Record successfully deleted.', APIJsonFormatter::HTTP_CODE_SUCCESS);

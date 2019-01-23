@@ -17,6 +17,7 @@ class DeleteBookTest extends TestCase
     public function it_should_load_delete_book_class()
     {
         $bookId = new BookId();
+        
         $bookRepository = Mockery::mock(BookRepository::class);
 
         $this->assertInstanceOf(DeleteBook::class, new DeleteBook($bookId, $bookRepository));
@@ -28,14 +29,16 @@ class DeleteBookTest extends TestCase
     public function it_should_delete_book()
     {
         $bookId = new BookId('ID123');
+
         $bookRepository = Mockery::mock(BookRepository::class);
+
         $bookRepository->shouldReceive('softDelete')
-                       ->withArgs(function ($bookId) {
-                            if ($bookId instanceof BookId) {
-                                return true;
-                            }
-                            return false;
-                       });
+            ->withArgs(function ($bookId) {
+                if ($bookId instanceof BookId) {
+                    return true;
+                }
+                return false;
+            });
 
         $deleteBook = new DeleteBook($bookId, $bookRepository);
         $deleteBook->execute();

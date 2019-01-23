@@ -58,20 +58,27 @@ class EditBook
 
     public function execute()
     {
-        $datePublished = new DatePublished();
-        if ($this->bookData['is_published'] == 1) {
-            $dateCreated = (new DateCreated())->get();
-            $datePublished = new DatePublished($dateCreated);
+        $bookEntity = $this->bookRepository->find(new BookId($this->bookId));
+
+        $datePublished = new DatePublished($bookEntity->datePublished());
+
+        if ($bookEntity->isPublished() === 'np') {
+            if ($this->bookData['is_published'] === 'p') {
+                $dateCreated = (new DateCreated(DateCreated::GENERATE))->get();
+                $datePublished = new DatePublished($dateCreated);
+            }
         }
 
         $bookEntity = new Book(
-            new BookId($this->bookId),
+            new BookId($bookEntity->id()),
             new Title($this->bookData['title']),
             new Description($this->bookData['description']),
             new Author($this->bookData['author']),
             $datePublished,
-            new DateCreated()
+            new DateCreated($bookEntity->dateCreated())
         );
+
+        $bookEntity->setIsPublished($this->bookData['is_published']);
 
         return $this->bookRepository->edit($bookEntity);
     }

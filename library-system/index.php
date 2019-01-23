@@ -4,15 +4,17 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width">
         <title>Library System</title>
+        <link rel="icon" type="image/x-icon" href="favicon.ico" />
         <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet">
         <link href="assets/vendor/bootstrap-3.3.7/css/bootstrap.min.css" rel="stylesheet">
         <link href="assets/vendor/bootstrap-3.3.7/css/bootstrap-theme.min.css" rel="stylesheet">
         <link rel="stylesheet" href="assets/vendor/magnific-popup/magnific-popup.css">
-        <link rel="stylesheet" href="assets/vendor/datatables/css/datatables.min.css">
+        <link rel="stylesheet" href="assets/vendor/datatables/datatables.min.css">
         <script src="assets/vendor/jquery-3.3.1/jquery.min.js"></script>
         <link href="assets/css/main.css" rel="stylesheet">
         <script src="assets/vendor/magnific-popup/jquery.magnific-popup.js"></script>
-        <script src="assets/vendor/datatables/js/datatables.min.js"></script>
+        <script src="assets/vendor/datatables/datatables.min.js"></script>
+        <script src="assets/vendor/sweetalertjs/sweetalertjs.min.js"></script>
     </head>
     <body>
         <div id="wrapper">
@@ -29,6 +31,7 @@
                             <table id="example" class="display" style="width:100%">
                                 <thead>
                                     <tr>
+                                        <th>ID</th>
                                         <th>Title</th>
                                         <th>Description</th>
                                         <th>Author</th>
@@ -87,7 +90,7 @@
                             <div class="form-group">
                                 <div class="row">
                                     <div class="col-sm-6 col-sm-offset-3">
-                                        <input type="submit" name="login-submit" id="login-submit" tabindex="4" class="form-control btn btn-primary" value="Submit">
+                                        <a href="#" name="action-submit" id="action-submit" tabindex="4" class="form-control btn btn-primary">Submit</a>
                                     </div>
                                 </div>
                             </div>

@@ -11,7 +11,7 @@ class DateCreated
     
     public function __construct($dateCreated = '')
     {
-        $this->dateCreated = $dateCreated ? \date(self::MYSQL_DATETIME_FORMAT) : '';
+        $this->dateCreated = (is_bool($dateCreated) && $dateCreated == true) ? \date(self::MYSQL_DATETIME_FORMAT) : $dateCreated;
     }
 
     public function get()

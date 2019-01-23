@@ -17,6 +17,7 @@ class AddBookTest extends TestCase
     public function it_should_load_add_book_class()
     {
         $bookData = [];
+        
         $bookRepository = Mockery::mock(BookRepository::class);
 
         $this->assertInstanceOf(AddBook::class, new AddBook($bookData, $bookRepository));
@@ -35,6 +36,7 @@ class AddBookTest extends TestCase
             'description' => '',
             'author' => ''
         ];
+
         $bookRepository = Mockery::mock(BookRepository::class);
 
         $addBook = new AddBook($bookData, $bookRepository);
@@ -51,14 +53,16 @@ class AddBookTest extends TestCase
             'description' => 'This is a sample book.',
             'author' => 'John Doe'
         ];
+
         $bookRepository = Mockery::mock(BookRepository::class);
+
         $bookRepository->shouldReceive('add')
-                       ->withArgs(function ($bookEntity) {
-                            if ($bookEntity instanceof Book) {
-                                return true;
-                            }
-                            return false;
-                       });
+            ->withArgs(function ($bookEntity) {
+                if ($bookEntity instanceof Book) {
+                    return true;
+                }
+                return false;
+            });
 
         $addBook = new AddBook($bookData, $bookRepository);
         $addBook->validate();

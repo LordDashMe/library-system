@@ -49,7 +49,12 @@ class Book
     private $date_created;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", options={"comment": "np = Not Published | p = Published"})
+     */
+    private $is_published = 'np';
+
+    /**
+     * @ORM\Column(type="text", options={"comment": "We use date flag for the is deleted inorder to log when the deletion happened."})
      */
     private $is_deleted = '';
 
@@ -99,8 +104,18 @@ class Book
         return $this->date_created;
     }
 
+    public function isPublished()
+    {
+        return $this->is_published;   
+    }
+
     public function setIsDeleted($is_deleted)
     {
         $this->is_deleted = $is_deleted;
+    }
+
+    public function setIsPublished($is_published)
+    {
+        $this->is_published = $is_published;
     }
 }

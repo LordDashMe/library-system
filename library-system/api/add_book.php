@@ -2,10 +2,15 @@
 
 require '../../vendor/autoload.php';
 require '../../doctrine_config.php';
+require 'json_formatter.php';
 
 use JoshuaReyes\LibrarySystem\Infrastructure\Repository\Doctrine\BookRepositoryImpl;
 use JoshuaReyes\LibrarySystem\Domain\UseCase\AddBook;
 use JoshuaReyes\LibrarySystem\Domain\Exception\AddBookFailedException;
+
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    exit("You're not using POST request method.");
+}
 
 $bookData = [
     'title' => $_POST['title'],
@@ -18,11 +23,7 @@ $addBook = new AddBook($bookData, new BookRepositoryImpl());
 try {
     $addBook->validate();
     $addBook->execute();
-    
-    echo '<pre>';
-    var_dump('success');
-
+    APIJsonFormatter::format('Record successfully created.', APIJsonFormatter::HTTP_CODE_SUCCESS);
 } catch (AddBookFailedException $exception) {
-    echo '<pre>';
-    var_dump($exception);
+    APIJsonFormatter::format($exception->getMessage(), APIJsonFormatter::HTTP_CODE_FAILED);
 }

@@ -3,6 +3,7 @@
 namespace JoshuaReyes\LibrarySystem\Domain\UseCase;
 
 use JoshuaReyes\LibrarySystem\Domain\Repository\BookRepository;
+use JoshuaReyes\LibrarySystem\Domain\ValueObject\BookId;
 
 class DeleteBook
 {
@@ -17,6 +18,6 @@ class DeleteBook
 
     public function execute()
     {
-        return $this->bookRepository->softDelete($this->bookId);
+        return $this->bookRepository->softDelete(new BookId($this->bookId));
     }
 }
