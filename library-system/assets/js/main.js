@@ -8,7 +8,7 @@
     });
 
     function actionsHandler() {
-        $('.action-add-book').on('click', function(){
+        $('.action-add-book').on('click', function () {
             $.magnificPopup.open({
                 items: {
                   src: $('#action-popup'),
@@ -33,13 +33,14 @@
 
     function dataTableAjax() {
         $('#example').DataTable( {
+            'responsive': true,
             "ajax": "api/books.php",
             "processing": true,
             "serverSide": true,
             "iDisplayLength": 10,
             "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
             "columns": [
-                { "data": "book_id", "name": "id" },
+                { "data": "book_id", "responsivePriority": 2, "name": "id" },
                 { "data": "book_title", "name": "title" },
                 { "data": "book_description", "name": "description" },
                 { "data": "book_author", "name": "author" },
@@ -52,10 +53,12 @@
                         return html;
                     }
                 },
-                { "data": "action", "orderable": false,
+                { "data": "action", "responsivePriority": 1, "orderable": false,
                     render : function(data, type, full, meta) {
-                        var html = '<a class="btn btn-default btn-sm action-edit-inline-book" data-id="'+ full.book_id +'" data-book-title="'+ full.book_title +'" data-book-description="'+ full.book_description +'" data-book-author="'+ full.book_author +'" data-book-publish="'+ full.book_publish +'"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>&nbsp;';
-                        html += '<a class="btn btn-default btn-sm action-delete-inline-book" data-id="'+ full.book_id +'"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>'
+                        var html = '<div style="text-align: center;">';
+                            html += '<a class="btn btn-default btn-sm action-edit-inline-book" data-id="'+ full.book_id +'" data-book-title="'+ full.book_title +'" data-book-description="'+ full.book_description +'" data-book-author="'+ full.book_author +'" data-book-publish="'+ full.book_publish +'"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>&nbsp;';
+                            html += '<a class="btn btn-default btn-sm action-delete-inline-book" data-id="'+ full.book_id +'"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>';
+                            html += '</div>';
                         return html;
                     } 
                 }
@@ -68,8 +71,7 @@
     }
 
     function addBookAjax() {
-        $('.add-action-submit').on('click', function(){
-            
+        $('.add-action-submit').on('click', function () {
             var bookData = {
                 title: $('#action-popup input[name="book_title"]').val(),
                 description: $('#action-popup textarea[name="book_description"]').val(),
@@ -148,7 +150,7 @@
 
             var bookId = $(this).data('id');
         
-            $('.edit-action-submit').on('click', function(){
+            $('.edit-action-submit').on('click', function () {
                 var bookData = {
                     id: bookId,
                     title: $('#action-popup input[name="book_title"]').val(),

@@ -4,8 +4,8 @@ require '../../vendor/autoload.php';
 require '../../doctrine_config.php';
 require 'json_formatter.php';
 
-use JoshuaReyes\LibrarySystem\Infrastructure\Repository\Doctrine\BookRepositoryImpl;
 use JoshuaReyes\LibrarySystem\Domain\UseCase\ShowBooks;
+use JoshuaReyes\LibrarySystem\Infrastructure\Repository\Doctrine\BookRepositoryImpl;
 
 if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
     exit("You're not using GET request method.");
@@ -19,7 +19,7 @@ $options = [
     'offset' => $_GET['start']
 ];
 
-$showBooks = new ShowBooks($options, new BookRepositoryImpl());
+$showBooks = new ShowBooks($options, new BookRepositoryImpl($entityManager));
 
 $records = $showBooks->execute();
 
@@ -31,13 +31,13 @@ $payload = [
 $data = [];
 
 foreach ($records['result'] as $record) {
-    array_push($data, array(
+    array_push($data, [
         'book_id' => $record->id(),
         'book_title' => $record->title(),
         'book_description' => $record->description(),
         'book_author' => $record->author(),
         'book_publish' => $record->isPublished()
-    ));
+    ]);
 }
 
 $payload['data'] = $data;

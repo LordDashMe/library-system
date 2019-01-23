@@ -10,10 +10,15 @@
         <link href="assets/vendor/bootstrap-3.3.7/css/bootstrap-theme.min.css" rel="stylesheet">
         <link rel="stylesheet" href="assets/vendor/magnific-popup/magnific-popup.css">
         <link rel="stylesheet" href="assets/vendor/datatables/datatables.min.css">
+        <link rel="stylesheet" href="assets/vendor/datatables/DataTables-1.10.18/css/jquery.dataTables.min.css">
+        <link rel="stylesheet" href="assets/vendor/datatables/FixedHeader-3.1.4/css/fixedHeader.dataTables.min.css">
+        <link rel="stylesheet" href="assets/vendor/datatables/Responsive-2.2.2/css/responsive.dataTables.min.css">
         <script src="assets/vendor/jquery-3.3.1/jquery.min.js"></script>
         <link href="assets/css/main.css" rel="stylesheet">
         <script src="assets/vendor/magnific-popup/jquery.magnific-popup.js"></script>
         <script src="assets/vendor/datatables/datatables.min.js"></script>
+        <script src="assets/vendor/datatables/FixedHeader-3.1.4/js/dataTables.fixedHeader.min.js"></script>
+        <script src="assets/vendor/datatables/Responsive-2.2.2/js/dataTables.responsive.min.js"></script>
         <script src="assets/vendor/sweetalertjs/sweetalertjs.min.js"></script>
     </head>
     <body>
@@ -28,7 +33,7 @@
                     <div class="panel panel-default">
                         <div class="panel-heading"><b>Book List</b></div>
                         <div class="panel-body">
-                            <table id="example" class="display" style="width:100%">
+                            <table id="example" class="display nowrap" style="width:100%">
                                 <thead>
                                     <tr>
                                         <th>ID</th>

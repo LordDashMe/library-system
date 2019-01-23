@@ -2,6 +2,7 @@
 
 namespace JoshuaReyes\LibrarySystem\Infrastructure\Repository\Doctrine;
 
+use Doctrine\ORM\EntityManagerInterface;
 use JoshuaReyes\LibrarySystem\Domain\Entity\Book;
 use JoshuaReyes\LibrarySystem\Domain\ValueObject\BookId;
 use JoshuaReyes\LibrarySystem\Domain\ValueObject\DateCreated;
@@ -9,16 +10,21 @@ use JoshuaReyes\LibrarySystem\Domain\Repository\BookRepository;
 
 class BookRepositoryImpl implements BookRepository
 {
+    private $entityManager;
+
+    public function __construct(EntityManagerInterface $entityManager)
+    {
+        $this->entityManager = $entityManager;
+    }
+    
     public function getAllBooks($options)
     {
-        global $entityManager;
-
-        $total = $entityManager->getRepository(Book::class)->createQueryBuilder('b')
+        $total = $this->entityManager->getRepository(Book::class)->createQueryBuilder('b')
             ->select('count(b.id)')
             ->getQuery()
             ->getSingleScalarResult();
 
-        $queryBuilder = $entityManager->getRepository(Book::class)->createQueryBuilder('b');
+        $queryBuilder = $this->entityManager->getRepository(Book::class)->createQueryBuilder('b');
         $queryBuilder->where("b.title LIKE :title");
         $queryBuilder->orWhere('b.author LIKE :author');
         $queryBuilder->andWhere("b.is_deleted = ''");
@@ -43,38 +49,30 @@ class BookRepositoryImpl implements BookRepository
 
     public function find(BookId $bookId)
     {
-        global $entityManager;
-
-        $bookEntity = $entityManager->getRepository(Book::class)->findBy(['id' => $bookId->get()]);
+        $bookEntity = $this->entityManager->getRepository(Book::class)->findBy(['id' => $bookId->get()]);
         
         return $bookEntity[0];
     }
 
     public function add(Book $book)
     {
-        global $entityManager;
-        
-        $entityManager->persist($book);
-        $entityManager->flush();
+        $this->entityManager->persist($book);
+        $this->entityManager->flush();
     }
 
     public function edit(Book $book)
     {
-        global $entityManager;
-        
-        $entityManager->merge($book);
-        $entityManager->flush();
+        $this->entityManager->merge($book);
+        $this->entityManager->flush();
     }
 
     public function softDelete(BookId $bookId)
     {
-        global $entityManager;
-
-        $bookEntity = $entityManager->getRepository(Book::class)->findBy(['id' => $bookId->get()]);
+        $bookEntity = $this->entityManager->getRepository(Book::class)->findBy(['id' => $bookId->get()]);
 
         $deletedAt = (new DateCreated(DateCreated::GENERATE))->get();
         $bookEntity[0]->setIsDeleted($deletedAt);
 
-        $entityManager->flush();
+        $this->entityManager->flush();
     }
 }

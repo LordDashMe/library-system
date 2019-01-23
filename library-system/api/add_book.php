@@ -4,9 +4,9 @@ require '../../vendor/autoload.php';
 require '../../doctrine_config.php';
 require 'json_formatter.php';
 
-use JoshuaReyes\LibrarySystem\Infrastructure\Repository\Doctrine\BookRepositoryImpl;
 use JoshuaReyes\LibrarySystem\Domain\UseCase\AddBook;
 use JoshuaReyes\LibrarySystem\Domain\Exception\AddBookFailedException;
+use JoshuaReyes\LibrarySystem\Infrastructure\Repository\Doctrine\BookRepositoryImpl;
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit("You're not using POST request method.");
@@ -18,7 +18,7 @@ $bookData = [
     'author' => $_POST['author']
 ];
 
-$addBook = new AddBook($bookData, new BookRepositoryImpl());
+$addBook = new AddBook($bookData, new BookRepositoryImpl($entityManager));
 
 try {
     $addBook->validate();
