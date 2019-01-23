@@ -36,7 +36,7 @@ CREATE TABLE `books` (
   `date_published` text COLLATE utf8_unicode_ci NOT NULL,
   `date_created` text COLLATE utf8_unicode_ci NOT NULL,
   `is_published` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'np = Not Published | p = Published',
-  `is_deleted` text COLLATE utf8_unicode_ci NOT NULL COMMENT 'We use date flag for the is deleted inorder to log when the deletion happened.'
+  `is_deleted` text COLLATE utf8_unicode_ci NOT NULL COMMENT 'We use date flag for the field is_deleted in order to log when the deletion happened.'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --

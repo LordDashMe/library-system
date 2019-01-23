@@ -54,7 +54,7 @@ class Book
     private $is_published = 'np';
 
     /**
-     * @ORM\Column(type="text", options={"comment": "We use date flag for the is deleted inorder to log when the deletion happened."})
+     * @ORM\Column(type="text", options={"comment": "We use date flag for the field is_deleted in order to log when the deletion happened."})
      */
     private $is_deleted = '';
 
