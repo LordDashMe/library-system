@@ -50,4 +50,3 @@ $bookRepository = new BookRepositoryImpl();
 $records = $bookRepository->getAllBooks();
 echo '<pre>';
 var_dump($records);
-
