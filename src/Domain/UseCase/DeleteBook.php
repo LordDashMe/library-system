@@ -2,8 +2,8 @@
 
 namespace JoshuaReyes\LibrarySystem\Domain\UseCase;
 
-use JoshuaReyes\LibrarySystem\Domain\Repository\BookRepository;
 use JoshuaReyes\LibrarySystem\Domain\ValueObject\BookId;
+use JoshuaReyes\LibrarySystem\Domain\Repository\BookRepository;
 
 class DeleteBook
 {
@@ -16,7 +16,7 @@ class DeleteBook
         $this->bookRepository = $bookRepository;
     }
 
-    public function execute()
+    public function perform()
     {
         return $this->bookRepository->softDelete(new BookId($this->bookId));
     }

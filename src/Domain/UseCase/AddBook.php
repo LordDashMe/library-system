@@ -32,6 +32,8 @@ class AddBook
     public function validate()
     {
         $this->validateRequiredFields();
+        
+        return $this;
     }
 
     private function validateRequiredFields()
@@ -41,16 +43,14 @@ class AddBook
                 throw AddBookFailedException::requiredFieldIsEmpty($requiedFieldLabel);
             }
         }
-        
-        return $this;
     }
 
-    public function execute()
+    public function perform()
     {
-        return $this->bookRepository->add($this->buildBookEntity());
+        return $this->bookRepository->add($this->composeBookEntity());
     }
 
-    private function buildBookEntity()
+    private function composeBookEntity()
     {
         return new Book(
             new BookId(),
@@ -58,7 +58,7 @@ class AddBook
             new Description($this->bookData['description']),
             new Author($this->bookData['author']),
             new DatePublished(),
-            new DateCreated(DateCreated::GENERATE)
+            (new DateCreated())->generate()
         );   
     }
 }

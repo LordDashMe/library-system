@@ -4,7 +4,7 @@ namespace JoshuaReyes\LibrarySystem\Domain\UseCase;
 
 use JoshuaReyes\LibrarySystem\Domain\Repository\BookRepository;
 
-class ShowBooks
+class ShowBooksDataTable
 {
     private $options;
     private $bookRepository;
@@ -15,8 +15,8 @@ class ShowBooks
         $this->bookRepository = $bookRepository;
     }
 
-    public function execute()
+    public function perform()
     {
-        return $this->bookRepository->getAllBooks($this->options);
+        return $this->bookRepository->getBooksDataTable($this->options);
     }
 }

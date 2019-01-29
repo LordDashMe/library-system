@@ -4,7 +4,6 @@ namespace JoshuaReyes\LibrarySystem\Tests\Unit\Domain\UseCase;
 
 use Mockery as Mockery;
 use PHPUnit\Framework\TestCase;
-use JoshuaReyes\LibrarySystem\Domain\Entity\Book;
 use JoshuaReyes\LibrarySystem\Domain\ValueObject\BookId;
 use JoshuaReyes\LibrarySystem\Domain\UseCase\DeleteBook;
 use JoshuaReyes\LibrarySystem\Domain\Repository\BookRepository;
@@ -28,7 +27,7 @@ class DeleteBookTest extends TestCase
      */
     public function it_should_delete_book()
     {
-        $bookId = new BookId('ID123');
+        $bookId = new BookId('ID0001');
 
         $bookRepository = Mockery::mock(BookRepository::class);
 
@@ -41,6 +40,6 @@ class DeleteBookTest extends TestCase
             });
 
         $deleteBook = new DeleteBook($bookId, $bookRepository);
-        $deleteBook->execute();
+        $deleteBook->perform();
     }
 }

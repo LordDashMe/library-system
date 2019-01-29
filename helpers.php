@@ -8,11 +8,8 @@ class APIJsonFormatter
     public static function format($payload, $statusCode = self::HTTP_CODE_SUCCESS)
     {
         header('Content-Type: application/json');
-
         http_response_code($statusCode);
-
         echo json_encode($payload);
-        
         exit;
     }
 }

@@ -3,7 +3,6 @@
 namespace JoshuaReyes\LibrarySystem\Domain\Entity;
 
 use Doctrine\ORM\Mapping AS ORM;
-
 use JoshuaReyes\LibrarySystem\Domain\ValueObject\BookId;
 use JoshuaReyes\LibrarySystem\Domain\ValueObject\Title;
 use JoshuaReyes\LibrarySystem\Domain\ValueObject\Description;
@@ -17,105 +16,113 @@ use JoshuaReyes\LibrarySystem\Domain\ValueObject\DateCreated;
  */
 class Book
 {
+    const IS_PUBLISHED = 1;
+    const IS_NOT_PUBLISHED = 2;
+
     /**
      * @ORM\Id
-     * @ORM\Column(type="guid")
+     * @ORM\Column(type="guid", name="id")
      */
     private $id;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", name="title")
      */
     private $title;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", name="description")
      */
     private $description;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", name="author")
      */
     private $author;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", name="date_published")
      */
-    private $date_published;
+    private $datePublished;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", name="date_created")
      */
-    private $date_created;
+    private $dateCreated;
 
     /**
-     * @ORM\Column(type="text", options={"comment": "np = Not Published | p = Published"})
+     * @ORM\Column(type="integer", length=2, name="is_published", options={"comment": "1 = Published | 2 = Not Published"})
      */
-    private $is_published = 'np';
+    private $isPublished = 2;
 
     /**
-     * @ORM\Column(type="text", options={"comment": "We use date flag for the field is_deleted in order to log when the deletion happened."})
+     * @ORM\Column(type="text", name="is_deleted", options={"comment": "We use date flag for the field is_deleted in order to log when the deletion happened."})
      */
-    private $is_deleted = '';
+    private $isDeleted = '';
 
     public function __construct(
         BookId $id,
         Title $title,
         Description $description,
         Author $author,
-        DatePublished $date_published,
-        DateCreated $date_created
+        DatePublished $datePublished,
+        DateCreated $dateCreated
     ) {
         $this->id = $id->get();
         $this->title = $title->get();
         $this->description = $description->get();
         $this->author = $author->get();
-        $this->date_published = $date_published->get();
-        $this->date_created = $date_created->get();
+        $this->datePublished = $datePublished->get();
+        $this->dateCreated = $dateCreated->get();
     }
 
-    public function id()
+    public function getId()
     {
         return $this->id;
     }
 
-    public function title()
+    public function getTitle()
     {
         return $this->title;
     }
 
-    public function description()
+    public function getDescription()
     {
         return $this->description;
     }
 
-    public function author()
+    public function getAuthor()
     {
         return $this->author;
     }
 
-    public function datePublished()
+    public function getDatePublished()
     {
-        return $this->date_published;
+        return $this->datePublished;
     }
 
-    public function dateCreated()
+    public function getDateCreated()
     {
-        return $this->date_created;
+        return $this->dateCreated;
+    }
+
+    public function getIsPublished()
+    {
+        return $this->isPublished;   
+    }
+
+    public function setIsDeleted($isDeleted)
+    {
+        $this->isDeleted = $isDeleted;
+    }
+
+    public function setIsPublished($isPublished)
+    {
+        $this->isPublished = $isPublished;
     }
 
     public function isPublished()
     {
-        return $this->is_published;   
-    }
-
-    public function setIsDeleted($is_deleted)
-    {
-        $this->is_deleted = $is_deleted;
-    }
-
-    public function setIsPublished($is_published)
-    {
-        $this->is_published = $is_published;
+        return $this->isPublished === Book::IS_PUBLISHED ? true : false;
     }
 }

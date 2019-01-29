@@ -26,7 +26,7 @@ class AddBookTest extends TestCase
     /**
      * @test
      */
-    public function it_should_validate_required_fields()
+    public function it_should_throw_exception_when_required_field_is_empty()
     {
         $this->expectException(AddBookFailedException::class);
         $this->expectExceptionCode(AddBookFailedException::REQUIRED_FIELD_IS_EMPTY);
@@ -66,6 +66,6 @@ class AddBookTest extends TestCase
 
         $addBook = new AddBook($bookData, $bookRepository);
         $addBook->validate();
-        $addBook->execute(); 
+        $addBook->perform(); 
     }
 }

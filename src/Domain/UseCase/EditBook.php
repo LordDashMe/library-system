@@ -33,8 +33,10 @@ class EditBook
 
     public function validate()
     {
-        $this->validateBookIdIsNotEmpty()
-             ->validateRequiredFields();
+        $this->validateBookIdIsNotEmpty();
+        $this->validateRequiredFields();
+
+        return $this;
     }
 
     private function validateBookIdIsNotEmpty()
@@ -42,8 +44,6 @@ class EditBook
         if (empty($this->bookId)) {
             throw EditBookFailedException::bookIdIsEmpty();
         }
-
-        return $this;
     }
 
     private function validateRequiredFields()
@@ -53,34 +53,37 @@ class EditBook
                 throw EditBookFailedException::requiredFieldIsEmpty($requiedFieldLabel);
             }
         }
-        
-        return $this;
     }
 
-    public function execute()
+    public function perform()
     {
         $bookEntity = $this->bookRepository->find(new BookId($this->bookId));
 
-        $datePublished = new DatePublished($bookEntity->datePublished());
+        $datePublished = new DatePublished($bookEntity->getDatePublished());
 
-        if ($bookEntity->isPublished() === 'np') {
-            if ($this->bookData['is_published'] === 'p') {
-                $dateCreated = (new DateCreated(DateCreated::GENERATE))->get();
+        if (! $bookEntity->isPublished()) {
+            if ($this->bookData['is_published'] === Book::IS_PUBLISHED) {
+                $dateCreated = (new DateCreated())->generate()->get();
                 $datePublished = new DatePublished($dateCreated);
             }
         }
 
+        return $this->bookRepository->edit($this->composeBookEntity($bookEntity, $datePublished));
+    }
+
+    private function composeBookEntity($bookEntity, $datePublished)
+    {
         $bookEntity = new Book(
-            new BookId($bookEntity->id()),
+            new BookId($bookEntity->getId()),
             new Title($this->bookData['title']),
             new Description($this->bookData['description']),
             new Author($this->bookData['author']),
             $datePublished,
-            new DateCreated($bookEntity->dateCreated())
+            new DateCreated($bookEntity->getDateCreated())
         );
 
         $bookEntity->setIsPublished($this->bookData['is_published']);
 
-        return $this->bookRepository->edit($bookEntity);
+        return $bookEntity;
     }
 }

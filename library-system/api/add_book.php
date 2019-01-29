@@ -2,7 +2,7 @@
 
 require '../../vendor/autoload.php';
 require '../../doctrine_config.php';
-require 'json_formatter.php';
+require '../../helpers.php';
 
 use JoshuaReyes\LibrarySystem\Domain\UseCase\AddBook;
 use JoshuaReyes\LibrarySystem\Domain\Exception\AddBookFailedException;
@@ -22,7 +22,7 @@ $addBook = new AddBook($bookData, new BookRepositoryImpl($entityManager));
 
 try {
     $addBook->validate();
-    $addBook->execute();
+    $addBook->perform();
     APIJsonFormatter::format('Record successfully created.', APIJsonFormatter::HTTP_CODE_SUCCESS);
 } catch (AddBookFailedException $exception) {
     APIJsonFormatter::format($exception->getMessage(), APIJsonFormatter::HTTP_CODE_FAILED);

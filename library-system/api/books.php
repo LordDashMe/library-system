@@ -2,9 +2,9 @@
 
 require '../../vendor/autoload.php';
 require '../../doctrine_config.php';
-require 'json_formatter.php';
+require '../../helpers.php';
 
-use JoshuaReyes\LibrarySystem\Domain\UseCase\ShowBooks;
+use JoshuaReyes\LibrarySystem\Domain\UseCase\ShowBooksDataTable;
 use JoshuaReyes\LibrarySystem\Infrastructure\Repository\Doctrine\BookRepositoryImpl;
 
 if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
@@ -19,27 +19,26 @@ $options = [
     'offset' => $_GET['start']
 ];
 
-$showBooks = new ShowBooks($options, new BookRepositoryImpl($entityManager));
+$showBooks = new ShowBooksDataTable($options, new BookRepositoryImpl($entityManager));
 
-$records = $showBooks->execute();
+$records = $showBooks->perform();
 
 $payload = [
     'recordsTotal' => $records['total'],
     'recordsFiltered' => $records['filteredTotal'],
 ];
 
-$data = [];
-
+$rows = [];
 foreach ($records['result'] as $record) {
-    array_push($data, [
-        'book_id' => $record->id(),
-        'book_title' => $record->title(),
-        'book_description' => $record->description(),
-        'book_author' => $record->author(),
-        'book_publish' => $record->isPublished()
+    array_push($rows, [
+        'book_id' => $record->getId(),
+        'book_title' => $record->getTitle(),
+        'book_description' => $record->getDescription(),
+        'book_author' => $record->getAuthor(),
+        'book_publish' => $record->getIsPublished()
     ]);
 }
 
-$payload['data'] = $data;
+$payload['data'] = $rows;
 
 APIJsonFormatter::format($payload, APIJsonFormatter::HTTP_CODE_SUCCESS);

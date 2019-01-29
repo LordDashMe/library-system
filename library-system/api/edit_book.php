@@ -2,7 +2,7 @@
 
 require '../../vendor/autoload.php';
 require '../../doctrine_config.php';
-require 'json_formatter.php';
+require '../../helpers.php';
 
 use JoshuaReyes\LibrarySystem\Domain\UseCase\EditBook;
 use JoshuaReyes\LibrarySystem\Domain\Exception\EditBookFailedException;
@@ -25,7 +25,7 @@ $editBook = new EditBook($bookId, $bookData, new BookRepositoryImpl($entityManag
 
 try {
     $editBook->validate();
-    $editBook->execute();
+    $editBook->perform();
     APIJsonFormatter::format('Record successfully edited.', APIJsonFormatter::HTTP_CODE_SUCCESS);
 } catch (EditBookFailedException $exception) {
     APIJsonFormatter::format($exception->getMessage(), APIJsonFormatter::HTTP_CODE_FAILED);

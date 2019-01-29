@@ -5,13 +5,13 @@ namespace JoshuaReyes\LibrarySystem\Tests\Unit\Domain\UseCase;
 use Mockery as Mockery;
 use PHPUnit\Framework\TestCase;
 use JoshuaReyes\LibrarySystem\Domain\Entity\Book;
-use JoshuaReyes\LibrarySystem\Domain\ValueObject\BookId;
+use JoshuaReyes\LibrarySystem\Domain\UseCase\EditBook;
 use JoshuaReyes\LibrarySystem\Domain\ValueObject\Title;
-use JoshuaReyes\LibrarySystem\Domain\ValueObject\Description;
 use JoshuaReyes\LibrarySystem\Domain\ValueObject\Author;
+use JoshuaReyes\LibrarySystem\Domain\ValueObject\BookId;
+use JoshuaReyes\LibrarySystem\Domain\ValueObject\Description;
 use JoshuaReyes\LibrarySystem\Domain\ValueObject\DateCreated;
 use JoshuaReyes\LibrarySystem\Domain\ValueObject\DatePublished;
-use JoshuaReyes\LibrarySystem\Domain\UseCase\EditBook;
 use JoshuaReyes\LibrarySystem\Domain\Repository\BookRepository;
 use JoshuaReyes\LibrarySystem\Domain\Exception\EditBookFailedException;
 
@@ -33,7 +33,7 @@ class EditBookTest extends TestCase
     /**
      * @test
      */
-    public function it_should_validate_book_id()
+    public function it_should_throw_exception_when_book_id_is_empty()
     {
         $this->expectException(EditBookFailedException::class);
         $this->expectExceptionCode(EditBookFailedException::BOOK_ID_IS_EMPTY);
@@ -54,12 +54,12 @@ class EditBookTest extends TestCase
     /**
      * @test
      */
-    public function it_should_validate_required_fields()
+    public function it_should_throw_exception_when_required_field_is_empty()
     {
         $this->expectException(EditBookFailedException::class);
         $this->expectExceptionCode(EditBookFailedException::REQUIRED_FIELD_IS_EMPTY);
 
-        $bookId = 'ID101';
+        $bookId = 'ID0001';
         $bookData = [
             'title' => '',
             'description' => '',
@@ -77,9 +77,9 @@ class EditBookTest extends TestCase
      */
     public function it_should_edit_book()
     {
-        $bookId = 'ID101';
+        $bookId = 'ID0001';
         $bookData = [
-            'title' => 'Title Book 101 NEW',
+            'title' => 'New Title Book 101',
             'description' => 'This is a sample book.',
             'author' => 'John Doe',
             'is_published' => 1
@@ -90,9 +90,9 @@ class EditBookTest extends TestCase
         $bookRepository->shouldReceive('find')
             ->andReturn(new Book(
                 new BookId(),
-                new Title('dummy'),
-                new Description('dummy'),
-                new Author('dummy'),
+                new Title('Clean Code Book'),
+                new Description('This is a sample book.'),
+                new Author('John Doe'),
                 new DatePublished(),
                 new DateCreated
             ));
@@ -107,6 +107,6 @@ class EditBookTest extends TestCase
 
         $editBook = new EditBook($bookId, $bookData, $bookRepository);
         $editBook->validate();
-        $editBook->execute(); 
+        $editBook->perform(); 
     }
 }
